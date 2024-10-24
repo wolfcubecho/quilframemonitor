@@ -1,0 +1,162 @@
+# Ceremony Client Monitor
+
+A monitoring service that automatically watches and maintains your Ceremony Client node by tracking frame progression. If frames stop progressing, it automatically restarts the service.
+
+## Features
+
+- Monitors frame progression every 30 seconds
+- Automatically restarts the ceremonyclient service if frames stall for 10 minutes
+- Implements a 15-minute cooldown period after restarts
+- Full logging of all monitoring activities
+- Runs as a system service with automatic startup
+- Graceful shutdown handling
+
+## Prerequisites
+
+- Linux system with systemd
+- Python 3
+- Root access
+- Ceremonyclient service installed and configured
+
+## Quick Installation
+
+1. Download the installer:
+```bash
+wget https://raw.githubusercontent.com/yourusername/ceremony-monitor/main/install-ceremony-monitor.sh
+```
+
+2. Make it executable and run:
+```bash
+chmod +x install-ceremony-monitor.sh
+sudo ./install-ceremony-monitor.sh
+```
+
+## Manual Installation
+
+1. Create the monitor script:
+```bash
+sudo nano /usr/local/bin/ceremony_monitor.py
+# Copy the ceremony_monitor.py contents
+```
+
+2. Create the service file:
+```bash
+sudo nano /lib/systemd/system/ceremony-monitor.service
+# Copy the ceremony-monitor.service contents
+```
+
+3. Set permissions and start the service:
+```bash
+sudo chmod 755 /usr/local/bin/ceremony_monitor.py
+sudo chown root:root /usr/local/bin/ceremony_monitor.py
+sudo touch /var/log/ceremony_monitor.log
+sudo chmod 644 /var/log/ceremony_monitor.log
+sudo chown root:root /var/log/ceremony_monitor.log
+
+sudo systemctl daemon-reload
+sudo systemctl enable ceremony-monitor
+sudo systemctl start ceremony-monitor
+```
+
+## Usage
+
+### Monitoring
+
+View the monitor status:
+```bash
+sudo systemctl status ceremony-monitor
+```
+
+Watch the logs in real-time:
+```bash
+sudo journalctl -u ceremony-monitor -f
+```
+
+Or check the dedicated log file:
+```bash
+tail -f /var/log/ceremony_monitor.log
+```
+
+### Service Management
+
+Stop the monitor:
+```bash
+sudo systemctl stop ceremony-monitor
+```
+
+Start the monitor:
+```bash
+sudo systemctl start ceremony-monitor
+```
+
+Restart the monitor:
+```bash
+sudo systemctl restart ceremony-monitor
+```
+
+Disable autostart:
+```bash
+sudo systemctl disable ceremony-monitor
+```
+
+Enable autostart:
+```bash
+sudo systemctl enable ceremony-monitor
+```
+
+## Configuration
+
+The monitor uses the following default settings:
+
+- Check Interval: 30 seconds
+- Stall Threshold: 10 minutes (time before restart)
+- Restart Cooldown: 15 minutes
+
+To modify these settings, edit the Python script:
+```bash
+sudo nano /usr/local/bin/ceremony_monitor.py
+```
+
+Look for these lines near the top of the CeremonyMonitor class:
+```python
+self.CHECK_INTERVAL = timedelta(seconds=30)
+self.STALL_THRESHOLD = timedelta(minutes=10)
+self.RESTART_COOLDOWN = timedelta(minutes=15)
+```
+
+After making changes, restart the service:
+```bash
+sudo systemctl restart ceremony-monitor
+```
+
+## Logging
+
+The monitor logs to two locations:
+- System journal: Access with `journalctl -u ceremony-monitor`
+- Dedicated log file: `/var/log/ceremony_monitor.log`
+
+## Troubleshooting
+
+1. Check if the service is running:
+```bash
+sudo systemctl status ceremony-monitor
+```
+
+2. View recent logs:
+```bash
+sudo journalctl -u ceremony-monitor -n 100
+```
+
+3. Check log file permissions:
+```bash
+ls -l /var/log/ceremony_monitor.log
+```
+
+4. Verify Python script permissions:
+```bash
+ls -l /usr/local/bin/ceremony_monitor.py
+```
+
+## Contributing
+
+Feel free to submit issues and enhancement requests!
