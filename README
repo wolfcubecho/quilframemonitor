@@ -1,6 +1,6 @@
-# Ceremony Client Monitor
+# Quil Frame Monitor
 
-A monitoring service that automatically watches and maintains your Ceremony Client node by tracking frame progression. If frames stop progressing, it automatically restarts the service.
+A monitoring service that automatically watches and maintains your Quil Ceremony Client node by tracking frame progression. If frames stop progressing, it automatically restarts the service.
 
 ## Features
 
@@ -20,42 +20,16 @@ A monitoring service that automatically watches and maintains your Ceremony Clie
 
 ## Quick Installation
 
-1. Download the installer:
+1. Clone the repository:
 ```bash
-wget https://raw.githubusercontent.com/yourusername/ceremony-monitor/main/install-ceremony-monitor.sh
+git clone https://github.com/wolfcubecho/Quil-frame-monitor.git
+cd Quil-frame-monitor
 ```
 
-2. Make it executable and run:
+2. Make the installer executable and run:
 ```bash
 chmod +x install-ceremony-monitor.sh
 sudo ./install-ceremony-monitor.sh
-```
-
-## Manual Installation
-
-1. Create the monitor script:
-```bash
-sudo nano /usr/local/bin/ceremony_monitor.py
-# Copy the ceremony_monitor.py contents
-```
-
-2. Create the service file:
-```bash
-sudo nano /lib/systemd/system/ceremony-monitor.service
-# Copy the ceremony-monitor.service contents
-```
-
-3. Set permissions and start the service:
-```bash
-sudo chmod 755 /usr/local/bin/ceremony_monitor.py
-sudo chown root:root /usr/local/bin/ceremony_monitor.py
-sudo touch /var/log/ceremony_monitor.log
-sudo chmod 644 /var/log/ceremony_monitor.log
-sudo chown root:root /var/log/ceremony_monitor.log
-
-sudo systemctl daemon-reload
-sudo systemctl enable ceremony-monitor
-sudo systemctl start ceremony-monitor
 ```
 
 ## Usage
@@ -94,11 +68,6 @@ Restart the monitor:
 sudo systemctl restart ceremony-monitor
 ```
 
-Disable autostart:
-```bash
-sudo systemctl disable ceremony-monitor
-```
-
 Enable autostart:
 ```bash
 sudo systemctl enable ceremony-monitor
@@ -117,7 +86,7 @@ To modify these settings, edit the Python script:
 sudo nano /usr/local/bin/ceremony_monitor.py
 ```
 
-Look for these lines near the top of the CeremonyMonitor class:
+Find these lines near the top of the CeremonyMonitor class:
 ```python
 self.CHECK_INTERVAL = timedelta(seconds=30)
 self.STALL_THRESHOLD = timedelta(minutes=10)
@@ -157,6 +126,9 @@ ls -l /var/log/ceremony_monitor.log
 ls -l /usr/local/bin/ceremony_monitor.py
 ```
 
-## Contributing
 
-Feel free to submit issues and enhancement requests!
+## Author
+
+[wolfcubecho](https://github.com/wolfcubecho)
+
+Would you like me to make any adjustments to this README?
