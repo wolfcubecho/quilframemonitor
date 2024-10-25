@@ -23,7 +23,7 @@ A monitoring service that automatically watches and maintains your Quil Ceremony
 1. Clone the repository:
 ```bash
 git clone https://github.com/wolfcubecho/quilframemonitor.git
-cd Quil-frame-monitor
+cd quilframemonitor
 ```
 
 2. Make the installer executable and run:
