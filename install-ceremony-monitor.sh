@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# ceremony-monitor-install.sh
 echo "Installing Ceremony Monitor..."
 
 # Check if running as root
@@ -10,7 +9,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Create python script
-cat > /usr/local/bin/ceremony_monitor.py << 'EOL'
+cat > /usr/local/bin/ceremony_monitor.py << 'EOF'
 import time
 import subprocess
 import json
@@ -148,10 +147,10 @@ if __name__ == "__main__":
     monitor = CeremonyMonitor(SERVICE_NAME)
     monitor.monitor()
     sys.exit(0)
-EOL
+EOF
 
 # Create systemd service file
-cat > /lib/systemd/system/ceremony-monitor.service << 'EOL'
+cat > /lib/systemd/system/ceremony-monitor.service << 'EOF'
 [Unit]
 Description=Ceremony Client Monitor Service
 After=network.target
@@ -165,7 +164,7 @@ RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
-EOL
+EOF
 
 # Set permissions
 chmod 755 /usr/local/bin/ceremony_monitor.py
@@ -191,4 +190,3 @@ echo "The monitor will:"
 echo "- Check frame numbers every 30 seconds"
 echo "- Restart ceremonyclient if frames don't increase for 10 minutes"
 echo "- Wait 15 minutes after a restart before resuming monitoring"
-EOL
